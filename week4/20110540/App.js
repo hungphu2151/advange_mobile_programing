@@ -1,7 +1,6 @@
-import { View, Text, StyleSheet, Image, SafeAreaView } from "react-native";
+import {  StyleSheet, } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { useEffect, useState } from "react";
