@@ -6,14 +6,15 @@ import { View, Text, StyleSheet, Image, TextInput } from "react-native";
 import Button from "../components/Button.js";
 import CreateAlert from "../components/CreateAlert.js";
 import logoUte from "../public/logo_ute.jpg";
+import { storeData } from "../utils/asyncstorage.js";
 
-const storeData = async (value) => {
-    try {
-        await AsyncStorage.setItem("token", value);
-    } catch (e) {
-        // saving error
-    }
-};
+// const storeData = async (key,value) => {
+//     try {
+//         await AsyncStorage.setItem(key, value);
+//     } catch (e) {
+//         // saving error
+//     }
+// };
 
 export function Login({ navigation }) {
     const [phone_num, onChangePhone_num] = useState("");
@@ -21,18 +22,21 @@ export function Login({ navigation }) {
 
     async function handleLogin() {
         try {
-            console.log("Login");
+            // console.log("Login");
             const res = await axios.post("http://10.0.2.2:3000/auth/login", {
                 phone_number: phone_num,
                 pass_word: pw,
             });
-            console.log(res.data);
+            // console.log(res.data);
             if (res.data.success) {
-                storeData(res.data.token)
+                // storeData('token',res.data.token)
+                // storeData('user',res.data.user)
+                // console.log("accessoken", res.data.token);
+                await storeData("token", res.data.token);
                 navigation.navigate("Main");
             }
         } catch (error) {
-            console.log(error.response);
+            // console.log(error.response);
             CreateAlert("Lỗi !", error.response.data.message);
         }
     }

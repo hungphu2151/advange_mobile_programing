@@ -8,6 +8,7 @@ import { Search } from "./Search";
 import { Create } from "./Create";
 import { Friend_request } from "./Friend_request";
 import { Profile } from "./Profile";
+import { UserProfile } from "./UserProfile";
 
 const Tab = createBottomTabNavigator();
 
@@ -32,7 +33,7 @@ export function Main() {
               iconName = focused ? "add-circle" : "add-circle-outline";
             } else if (route.name === "Friend") {
               iconName = focused ? "person-add" : "person-add-outline";
-            } else if (route.name === "Profile") {
+            } else if (route.name === "UserProfile") {
               iconName = focused ? "person-circle" : "person-circle-outline";
             }
 
@@ -46,7 +47,7 @@ export function Main() {
         <Tab.Screen name="Search" component={Search} />
         <Tab.Screen name="Create" component={Create} />
         <Tab.Screen name="Friend" component={Friend_request} />
-        <Tab.Screen name="Profile" component={Profile} />
+        <Tab.Screen name="UserProfile" component={UserProfile} />
       </Tab.Navigator>
     // </NavigationContainer>
   );
