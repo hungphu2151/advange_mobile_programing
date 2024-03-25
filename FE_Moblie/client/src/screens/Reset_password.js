@@ -19,7 +19,7 @@ export function Reset_password({ navigation }) {
     //   console.log(token);
       //   CreateAlert("OTP đã được gửi qua confirm của bạn.")
       const res = await axios.post(
-        `http://10.0.2.2:3000/auth/reset-password/${token}`,
+        process.env.EXPO_PUBLIC_LOCAL_API_URL + `/auth/reset-password/${token}`,
         {
           new_password: pw,
           confirm: confirm,

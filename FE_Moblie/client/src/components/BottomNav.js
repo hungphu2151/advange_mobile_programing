@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeScreen from "~/screens/HomeScreen";
+import HomeScreen from "../screens/HomeScreen";
 import { Image } from "expo-image";
 
 const Tab = createBottomTabNavigator();
@@ -25,7 +25,7 @@ const BottomNav = () => {
         component={HomeScreen}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
-            <Image source={require("~/assets/icons/home.svg")} style={{ width: 30, height: 30 }} />
+            <Image source={require("../assets/icons/home.svg")} style={{ width: 30, height: 30 }} />
           ),
           tabBarShowLabel: false,
         }}
@@ -36,7 +36,7 @@ const BottomNav = () => {
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Image
-              source={require("~/assets/icons/search.svg")}
+              source={require("../assets/icons/search.svg")}
               style={{ width: 30, height: 30 }}
             />
           ),
@@ -48,7 +48,7 @@ const BottomNav = () => {
         component={HomeScreen}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
-            <Image source={require("~/assets/icons/add.svg")} style={{ width: 30, height: 30 }} />
+            <Image source={require("../assets/icons/add.svg")} style={{ width: 30, height: 30 }} />
           ),
           tabBarShowLabel: false,
         }}
@@ -59,7 +59,7 @@ const BottomNav = () => {
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Image
-              source={require("~/assets/icons/add-user.svg")}
+              source={require("../assets/icons/add-user.svg")}
               style={{ width: 30, height: 30 }}
             />
           ),
@@ -72,7 +72,7 @@ const BottomNav = () => {
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Image
-              source={require("~/assets/icons/user-sm.svg")}
+              source={require("../assets/icons/user-sm.svg")}
               style={{ width: 30, height: 30 }}
             />
           ),

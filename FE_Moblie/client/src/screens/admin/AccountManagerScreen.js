@@ -1,10 +1,10 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import CardProfile from "~/components/CardProfile";
-import Container from "~/components/Container";
-import useAppBar from "~/hooks/useAppBar";
-import COLORS from "~/utils/color";
+import CardProfile from "../../components/CardProfile";
+import Container from "../../components/Container";
+import useAppBar from "../../hooks/useAppBar";
+import COLORS from "../../utils/color";
 
-const AccountManagerScreen = () => {
+export function AccountManagerScreen() {
   useAppBar({ title: "Quản lý tài khoản" });
 
   return (
@@ -27,7 +27,6 @@ const AccountManagerScreen = () => {
   );
 };
 
-export default AccountManagerScreen;
 
 const styles = StyleSheet.create({
   bottom: {

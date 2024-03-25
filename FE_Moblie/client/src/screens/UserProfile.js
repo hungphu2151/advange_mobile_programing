@@ -238,9 +238,6 @@ export function UserProfile({ navigation }) {
         </ScrollView>
     );
 }
-// const UserProfile = () => {
-
-// };
 
 const styles = StyleSheet.create({
     container: {
@@ -385,5 +382,3 @@ const styles = StyleSheet.create({
         width: 44,
     },
 });
-
-// export default UserProfile;

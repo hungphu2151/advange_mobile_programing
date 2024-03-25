@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from "react-native";
-import CardImage from "~/components/CardImage";
-import useAppBar from "~/hooks/useAppBar";
+import CardImage from "../../components/CardImage";
+import useAppBar from "../../hooks/useAppBar";
 
-const UploadManagerScreen = () => {
+export function UploadManagerScreen(){
   useAppBar({ title: "Quản lí đăng tải" });
 
   return (
@@ -15,8 +15,6 @@ const UploadManagerScreen = () => {
     </View>
   );
 };
-
-export default UploadManagerScreen;
 
 const styles = StyleSheet.create({
   container: {

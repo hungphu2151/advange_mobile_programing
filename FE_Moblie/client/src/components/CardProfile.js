@@ -2,19 +2,19 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { Image } from "expo-image";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import COLORS from "~/utils/color";
+import COLORS from "../utils/color";
 
 const CardProfile = ({ isAvatar = false, name = "" }) => {
   return (
     <View style={styles.wrap}>
       {isAvatar ? (
         <Image
-          source={require("~/assets/images/avatar.jpg")}
+          source={require("../assets/images/avatar.jpg")}
           style={{ width: 30, height: 30, borderRadius: 15 }}
         />
       ) : (
         <Image
-          source={require("~/assets/icons/user-profile.svg")}
+          source={require("../assets/icons/user-profile.svg")}
           style={{ width: 30, height: 30 }}
         />
       )}

@@ -8,10 +8,10 @@ import {
   View,
 } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
-import Container from "~/components/Container";
-import FormInput from "~/components/FormInput";
-import useAppBar from "~/hooks/useAppBar";
-import COLORS from "~/utils/color";
+import Container from "../../components/Container";
+import FormInput from "../../components/FormInput";
+import useAppBar from "../../hooks/useAppBar";
+import COLORS from "../../utils/color";
 
 const data = [
   { label: "Item 1", value: "1" },
@@ -24,7 +24,7 @@ const data = [
   { label: "Item 8", value: "8" },
 ];
 
-const EditProfileScreen = () => {
+export function EditProfileScreen(){
   useAppBar({ title: "Chỉnh sửa thông tin cá nhân" });
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
@@ -92,8 +92,6 @@ const EditProfileScreen = () => {
     </Container>
   );
 };
-
-export default EditProfileScreen;
 
 const styles = StyleSheet.create({
   group: {

@@ -1,6 +1,6 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import COLORS from "~/utils/color";
+import COLORS from "../utils/color";
 
 const CardImage = () => {
   return (

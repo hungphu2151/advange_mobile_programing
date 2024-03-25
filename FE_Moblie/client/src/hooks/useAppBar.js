@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { useLayoutEffect } from "react";
-import Header from "~/components/Header";
-import HeaderHome from "~/components/HeaderHome";
+import Header from "../components/Header";
+import HeaderHome from "../components/HeaderHome";
 
 const useAppBar = ({ options = {}, title, isShowGoBackHome = false, isHome = false }) => {
   const navigation = useNavigation();

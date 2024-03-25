@@ -7,9 +7,9 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
-import CardInfo from "~/components/CardInfo";
-import useAppBar from "~/hooks/useAppBar";
-import COLORS from "~/utils/color";
+import CardInfo from "../components/CardInfo";
+import useAppBar from "../hooks/useAppBar";
+import COLORS from "../utils/color";
 
 const HomeScreen = () => {
     useAppBar({ isHome: true });
@@ -27,7 +27,7 @@ const HomeScreen = () => {
                     >
                         <View>
                             <Image
-                                source={require("~/assets/icons/user-xl.svg")}
+                                source={require("../assets/icons/user-xl.svg")}
                                 style={{ width: 80, height: 80 }}
                             />
 

@@ -22,7 +22,7 @@ export function Forgot_password({ navigation }) {
       console.log("Send Otp");
       //   CreateAlert("OTP đã được gửi qua gmail của bạn.")
       const res = await axios.post(
-        "http://10.0.2.2:3000/auth/forgot-password",
+        process.env.EXPO_PUBLIC_LOCAL_API_URL +'/auth/forgot-password',
         {
           phone_number: phone_num,
           gmail: gmail,

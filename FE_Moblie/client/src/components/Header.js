@@ -28,9 +28,9 @@ const Header = ({ name, isBack = false, isShowGoBackHome = false }) => {
 
       <View>
         <Image
-          source={require("~/assets/images/logo.jpg")}
+          source={require("../assets/images/logo.jpg")}
           style={styles.image}
-          contentFit="cover"
+          contentFit="contain"
         />
       </View>
     </View>

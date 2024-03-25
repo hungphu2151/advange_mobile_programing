@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
-import CardCategory from "~/components/CardCategory";
-import Container from "~/components/Container";
-import useAppBar from "~/hooks/useAppBar";
+import CardCategory from "../../components/CardCategory";
+import Container from "../../components/Container";
+import useAppBar from "../../hooks/useAppBar";
 
 const data = [
   { id: 1, title: "Quản lý thông tin cá nhân", icon: "user", to: "EditProfile" },
@@ -10,7 +10,7 @@ const data = [
   { id: 4, title: "Thống kê bài viết", icon: "post", to: "StatisticalPost" },
 ];
 
-const AdminScreen = () => {
+export function AdminScreen(){
   useAppBar({ title: "Trang quản lý" });
 
   return (
@@ -24,7 +24,7 @@ const AdminScreen = () => {
   );
 };
 
-export default AdminScreen;
+// export default AdminScreen;
 
 const styles = StyleSheet.create({
   container: {},

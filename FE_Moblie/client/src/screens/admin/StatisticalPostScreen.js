@@ -1,18 +1,18 @@
 import { Image } from "expo-image";
 import { StyleSheet, Text, View } from "react-native";
-import CardImage from "~/components/CardImage";
-import useAppBar from "~/hooks/useAppBar";
-import COLORS from "~/utils/color";
+import CardImage from "../../components/CardImage";
+import useAppBar from "../../hooks/useAppBar";
+import COLORS from "../../utils/color";
 
-const StatisticalPostScreen = () => {
+export function StatisticalPostScreen() {
   useAppBar({ title: "Thống kê" });
 
   return (
     <View style={styles.container}>
       <View style={styles.wrapHeader}>
-        <Image style={styles.icon} source={require("~/assets/icons/cate.svg")} />
+        <Image style={styles.icon} source={require("../../assets/icons/cate.svg")} />
         <Text style={{ fontWeight: "bold" }}>Bài viết trong ngày</Text>
-        <Image style={styles.icon} source={require("~/assets/icons/drop.svg")} />
+        <Image style={styles.icon} source={require("../../assets/icons/drop.svg")} />
       </View>
 
       <View style={styles.wrap}>
@@ -24,7 +24,6 @@ const StatisticalPostScreen = () => {
   );
 };
 
-export default StatisticalPostScreen;
 
 const styles = StyleSheet.create({
   container: {

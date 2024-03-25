@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -13,14 +13,22 @@ import {
     Animated,
     TouchableOpacity,
     FlatList,
+    StatusBar,
 } from "react-native";
 import { ResizeMode } from "expo-av";
 import VideoPlayer from "expo-video-player";
 
 import more from "../public/more.png";
+import avatar from "../public/avatar.jpg";
+import pokemon1 from "../public/pokemon1.jpg";
+import heart from "../public/heart.png";
+import chat from "../public/chat.png";
+import send from "../public/send.png";
+import save from "../public/save.png";
 import DynamicHeader from "../components/home/DynamicHeader";
 import { getData } from "../utils/asyncstorage";
 import PostInteract from "../components/home/PostInteract";
+import { DataContext } from "../store/Store";
 
 const { width } = Dimensions.get("window");
 const flatListHeight = width * 1.3375;
@@ -30,10 +38,12 @@ export function Home() {
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(0);
+    const {user} = useContext(DataContext)
 
 
     useEffect(() => {
         fetchData();
+        console.log(user.avatar);
     }, []);
 
     const fetchData = async () => {
@@ -41,7 +51,7 @@ export function Home() {
             const token = await getData('token');
             setLoading(true);
             const response = await axios.get(
-                `http://10.0.2.2:3000/posts/?size=5&page=${page}`,
+                process.env.EXPO_PUBLIC_LOCAL_API_URL + `/posts/?size=5&page=${page}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -110,7 +120,8 @@ export function Home() {
     };
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={styles.container}> 
+            <StatusBar />
             <DynamicHeader />
             <ScrollView
                 scrollEventThrottle={16}
@@ -118,7 +129,7 @@ export function Home() {
                 onScroll={(event) => handleScroll(event)}
             >
                 <View style={styles.body}>
-                    {posts.map((post,index) => {
+                    {/* {posts.map((post,index) => {
                         return (
                             <View key={index} style={styles.item}>
                                 <View style={styles.post}>
@@ -219,9 +230,9 @@ export function Home() {
                                 </View>
                             </View>
                         );
-                    })}
+                    })} */}
 
-                    {/* <View style={styles.post}>
+                    <View style={styles.post}>
             <View style={styles.post_head}>
               <View style={styles.post_head_left}>
                 <Image source={avatar} style={styles.avatar} />
@@ -253,7 +264,7 @@ export function Home() {
               </Text>
               <Text style={[styles.font_14, styles.infoText]}>6 tháng 1</Text>
             </View>
-          </View> */}
+          </View>
                 </View>
             </ScrollView>
         </SafeAreaView>
@@ -264,7 +275,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#fff",
-        paddingTop: 35,
+        // paddingTop: 35,
         // backgroundColor:"grey"
     },
     avatar: {
