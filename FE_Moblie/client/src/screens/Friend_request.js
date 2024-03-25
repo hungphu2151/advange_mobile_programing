@@ -8,10 +8,13 @@ import {
     Image,
     FlatList,
     Dimensions,
+    Button,
+    TouchableOpacity,
 } from "react-native";
 import VideoPlayer from "expo-video-player";
 import { ResizeMode } from "expo-av";
-import { Video } from 'expo-av';
+import { Video } from "expo-av";
+import Modal from "react-native-modal";
 
 import logoCntt from "../public/logocntt.png";
 import noti from "../public/notification.png";
@@ -23,22 +26,6 @@ import heart from "../public/heart.png";
 import chat from "../public/chat.png";
 import send from "../public/send.png";
 import save from "../public/save.png";
-
-const images = [
-    {
-        uri: "https://res.cloudinary.com/dkeecnort/image/upload/v1702567978/g6320zqslhyqesex6w5w.jpg",
-        isVideo: false,
-    },
-    {
-        uri: "https://res.cloudinary.com/dkeecnort/video/upload/v1709737295/post_imgs/e3rh8vgvcegoun2lu6t2.mp4",
-        // uri: "https://res.cloudinary.com/dkeecnort/image/upload/v1702957152/post_imgs/pkfuxejfdn1qbj9ahcwe.jpg",
-        isVideo: true,
-    },
-    {
-        uri: "https://res.cloudinary.com/dkeecnort/image/upload/v1702957152/post_imgs/pkfuxejfdn1qbj9ahcwe.jpg",
-        isVideo: false,
-    },
-];
 
 const { width } = Dimensions.get("window");
 const flatListHeight = width * 1.3375;
@@ -58,68 +45,99 @@ const DynamicHeader = ({ value }: any) => {
 };
 
 export function Friend_request() {
-    const scrollOffsetY = useRef(new Animated.Value(0)).current;
-    const [currentPage, setCurrentPage] = useState(0);
+    const [isModalVisible, setModalVisible] = useState(false);
 
-    const onScroll = (event) => {
-        const { contentOffset } = event.nativeEvent;
-        const viewSize = event.nativeEvent.layoutMeasurement;
-        const pageNum = Math.floor(contentOffset.x / viewSize.width);
-        setCurrentPage(pageNum);
+    const toggleModal = () => {
+        setModalVisible(!isModalVisible);
     };
-    const renderMedia = ({ item }) => {
-        if (item.isVideo) {
-            return (
-                <VideoPlayer
-                    videoProps={{
-                        shouldPlay: false,
-                        resizeMode: ResizeMode.STRETCH,
-                        source: {
-                            uri: item.uri,
-                        },
-                    }}
-                    style={styles.image}
-                />
-            );
-        } else {
-            return <Image source={{ uri: item.uri }} style={styles.image} />;
-        }
-    };
-    const renderItem = ({ item }) => (
-        <Image
-          source={{ uri: item.uri }}
-          style={styles.image}
-        />
-      );
+
     return (
-        <View style={styles.container}>
-            <DynamicHeader value={scrollOffsetY} />
-            <View style={{ height: flatListHeight, backgroundColor: "red" }}>
-                <FlatList
-                    data={images}
-                    horizontal={true}
-                    pagingEnabled={true} 
-                    renderItem={renderMedia}
-                    keyExtractor={(item) => item.id}
-                    onScroll={onScroll}
-                    showsHorizontalScrollIndicator={false}
-                />
-            </View>
-            {images.length > 1 && (
-                <View style={styles.pagination}>
-                    {images.map((item, index) => (
-                        <View
-                            key={index}
-                            style={[
-                                styles.paginationDot,
-                                index === currentPage
-                                    ? styles.paginationDotActive
-                                    : null,
-                            ]}
-                        />
-                    ))}
-                </View>
-            )} 
+        <View style={{ flex: 1 }}>
+            <Button title="Show modal" onPress={toggleModal} />
+            <Modal
+                isVisible={isModalVisible}
+                style={{ margin: 0 }}
+                onBackdropPress={toggleModal}
+                // swipeDirection={["down"]}
+                // onSwipeComplete={toggleModal}
+            >
+                <ScrollView >
+                    <View style={styles.modal}>
+                        <View style={styles.head} />
+                        <Button title="Toggle Modal" onPress={toggleModal} />
+                        <Text style={{ fontWeight: "bold" }}>Bình luận</Text>
+                        <View style={styles.hr} />
+                        {/* Đây là phần nội dung có thể cuộn */}
+                        {[...Array(10)].map((_, index) => (
+                            <View style={styles.comment} key={index}>
+                                <View style={styles.leftContent}>
+                                    <Image
+                                        source={avatar}
+                                        style={styles.avatar}
+                                    />
+                                    <View style={styles.verticalContainer}>
+                                        <Text
+                                            style={{
+                                                fontWeight: "bold",
+                                                fontSize: 14,
+                                                marginBottom: 3,
+                                            }}
+                                        >
+                                            Nguyễn Văn A
+                                        </Text>
+                                        <Text
+                                            style={{
+                                                fontSize: 14,
+                                                marginBottom: 3,
+                                                width: "100%",
+                                            }}
+                                        >
+                                            Nội dung bình luận Nội dung bình
+                                            luận Nội dung bình luận Nội dung
+                                            bình luận Nội dung bình luận Nội
+                                            dung bình luận Nội dung bình luận
+                                            Nội dung bình luận Nội dung bình
+                                            luận Nội dung bình luận Nội dung bình luận Nội dung bình luận
+                                        </Text>
+                                        <Text
+                                            style={{
+                                                fontSize: 13,
+                                                marginBottom: 5,
+                                                color: "#737373",
+                                                // backgroundColor:'gray'
+                                            }}
+                                        >
+                                            Trả lời
+                                        </Text>
+                                        <Text
+                                            style={{
+                                                fontSize: 13,
+                                                color: "#737373",
+                                            }}
+                                        >
+                                            - Xem 2 câu trả lời khác
+                                        </Text>
+                                    </View>
+                                </View>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        console.log("like");
+                                    }}
+                                >
+                                    <Image
+                                        source={heart}
+                                        style={[
+                                            styles.iconStyle,
+                                            { alignSelf: "center" },
+                                        ]}
+                                    />
+                                </TouchableOpacity>
+                            </View>
+                        ))}
+                        {/* Phần nội dung có thể cuộn kết thúc */}
+                    </View>
+                </ScrollView>
+            </Modal>
         </View>
     );
 }
@@ -128,70 +146,68 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#fff",
-        paddingTop: 35,
+    },
+    scrollViewContent: {
+        flexGrow: 1,
+        justifyContent: "flex-start",
+    },
+    modal: {
+        flex: 1,
+        backgroundColor: "white",
+        alignItems: "center",
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
     },
     head: {
+        display: "flex",
+        width: 40,
+        height: 5,
+        marginTop: 11,
+        backgroundColor: "gray",
+        marginBottom: 25,
+        borderRadius: 10,
+    },
+    hr: {
+        width: "100%",
+        height: 1,
+        marginTop: 15,
+        backgroundColor: "#D9D9D9",
+    },
+    comment: {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        paddingLeft: 20,
-        backgroundColor: "#fff",
+        width: "100%",
+        paddingHorizontal: 10,
+        marginVertical: 15,
+        // backgroundColor: "red",
     },
-    head_right: {
+    leftContent: {
         flexDirection: "row",
-        marginRight: 10,
-        alignItems: "center",
+        // backgroundColor: "gray",
+        width: "90%",
     },
-    body: {
-        // flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        height: 100,
-        backgroundColor: "#678983",
-        marginTop: 10,
-        marginHorizontal: 10,
+    avatar: {
+        height: 36,
+        width: 36,
+        borderRadius: 18,
+        marginRight: 15,
     },
-    logo_fit: {
-        height: 40,
-        width: 49,
+    verticalContainer: {
+        flexDirection: "col",
+        // justifyContent: "space-between",
+        // alignItems: "center",
+        width: "85%",
+        // paddingHorizontal: 10,
+        // marginVertical: 15,
+        // backgroundColor: "red",
+        // flexWrap: "wrap",
     },
-    noti: {
-        height: 28,
-        width: 28,
+    textStyle: {
+        // Your text styles here
     },
-    mess: {
-        marginLeft: 10,
-        height: 28,
-        width: 28,
-    },
-    subtitle: {
-        color: "#ffff",
-        fontWeight: "bold",
-    },
-    title: {
-        color: "#ffff",
-        fontWeight: "bold",
-        fontSize: 20,
-    },
-    image: {
-        width: width,
-        height: width * 1.3375,
-        resizeMode: "stretch",
-    },
-    pagination: {
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: 5,
-    },
-    paginationDot: {
-        width: 8,
-        height: 8,
-        borderRadius: 5,
-        backgroundColor: "gray",
-        marginHorizontal: 3,
-    },
-    paginationDotActive: {
-        backgroundColor: "black",
+    iconStyle: {
+        height: 24,
+        width: 24,
     },
 });

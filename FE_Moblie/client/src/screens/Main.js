@@ -15,7 +15,6 @@ const Tab = createBottomTabNavigator();
 
 export function Main() {
     return (
-        // <NavigationContainer>
         <Tab.Navigator
             screenOptions={({ route }) => ({
                 headerShown: false,
@@ -78,12 +77,18 @@ export function Main() {
                 component={Search}
                 options={{
                     tabBarIcon: ({ focused, color, size }) => {
-                        iconName = focused ? "search" : "search-outline";
-                        return (
-                            <Ionicons
-                                name={iconName}
-                                size={size}
-                                color={color}
+                        return focused ? (
+                            <MyIcon
+                                name="search"
+                                iconPackage="Ionicons"
+                                size={24}
+                                // color="#fff"
+                            />
+                        ) : (
+                            <MyIcon
+                                name="search-outline"
+                                iconPackage="Ionicons"
+                                size={24}
                             />
                         );
                     },
@@ -135,7 +140,6 @@ export function Main() {
             />
             <Tab.Screen name="UserProfile" component={UserProfile} />
         </Tab.Navigator>
-        // </NavigationContainer>
     );
 }
 

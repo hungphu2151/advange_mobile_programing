@@ -1,16 +1,13 @@
-import {
-    View,
-    StyleSheet,
-    Image,
-    TouchableOpacity,
-} from "react-native";
+import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
+
+import CommentModal from "../CommentModal"
 
 import heart from "../../public/heart.png";
 import chat from "../../public/chat.png";
 import send from "../../public/send.png";
 import save from "../../public/save.png";
 
-const PostInteract = () => {
+const PostInteract = ({ comment, isModalVisible }) => {
     return (
         <View style={styles.interact}>
             <View style={styles.interact_left}>
@@ -21,12 +18,12 @@ const PostInteract = () => {
                 >
                     <Image source={heart} style={styles.interact_icon} />
                 </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => {
-                        console.log("comment");
-                    }}
-                >
+                <TouchableOpacity onPress={comment}>
                     <Image source={chat} style={styles.interact_icon} />
+                    <CommentModal
+                        isModalVisible={isModalVisible}
+                        pressed={comment}
+                    />
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {

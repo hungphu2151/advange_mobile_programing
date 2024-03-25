@@ -29,6 +29,7 @@ import DynamicHeader from "../components/home/DynamicHeader";
 import { getData } from "../utils/asyncstorage";
 import PostInteract from "../components/home/PostInteract";
 import { DataContext } from "../store/Store";
+import CommentModal from "../components/CommentModal";
 
 const { width } = Dimensions.get("window");
 const flatListHeight = width * 1.3375;
@@ -38,20 +39,26 @@ export function Home() {
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(0);
-    const {user} = useContext(DataContext)
+    const { user } = useContext(DataContext);
 
+    const [isModalVisible, setModalVisible] = useState(false);
+
+    const toggleModal = () => {
+        setModalVisible(!isModalVisible);
+    };
 
     useEffect(() => {
         fetchData();
-        console.log(user.avatar);
+        // console.log(user.avatar);
     }, []);
 
     const fetchData = async () => {
         try {
-            const token = await getData('token');
+            const token = await getData("token");
             setLoading(true);
             const response = await axios.get(
-                process.env.EXPO_PUBLIC_LOCAL_API_URL + `/posts/?size=5&page=${page}`,
+                process.env.EXPO_PUBLIC_LOCAL_API_URL +
+                    `/posts/?size=5&page=${page}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -120,8 +127,8 @@ export function Home() {
     };
 
     return (
-        <SafeAreaView style={styles.container}> 
-            <StatusBar />
+        <SafeAreaView style={styles.container}>
+            <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
             <DynamicHeader />
             <ScrollView
                 scrollEventThrottle={16}
@@ -129,7 +136,7 @@ export function Home() {
                 onScroll={(event) => handleScroll(event)}
             >
                 <View style={styles.body}>
-                    {/* {posts.map((post,index) => {
+                    {posts.map((post,index) => {
                         return (
                             <View key={index} style={styles.item}>
                                 <View style={styles.post}>
@@ -188,7 +195,7 @@ export function Home() {
                                             </View>
                                         )}
                                     </View>
-                                    <PostInteract/>
+                                    <PostInteract comment={toggleModal} isModalVisible={isModalVisible}/>
                                     <View style={styles.info}>
                                         <Text
                                             style={[
@@ -230,41 +237,64 @@ export function Home() {
                                 </View>
                             </View>
                         );
-                    })} */}
+                    })}
 
-                    <View style={styles.post}>
-            <View style={styles.post_head}>
-              <View style={styles.post_head_left}>
-                <Image source={avatar} style={styles.avatar} />
-                <Text style={[styles.font_14, styles.bold]}>Nguyễn Văn A</Text>
-              </View>
-              <Image source={more} style={styles.more} />
-            </View>
-            <Image source={pokemon1} style={styles.post_img} />
-            <View style={styles.interact}>
-              <View style={styles.interact_left}>
-                <Image source={heart} style={styles.interact_icon} />
-                <Image source={chat} style={styles.interact_icon} />
-                <Image source={send} style={styles.interact_icon} />
-              </View>
-              <Image source={save} style={styles.interact_icon} />
-            </View>
-            <View style={styles.info}>
-              <Text style={[styles.font_14, styles.bold]}>
-                263.526 lượt thích
-              </Text>
-              <Text
-                style={[styles.font_14, styles.infoText, { marginRight: 10 }]}
-              >
-                <Text style={styles.bold}>Nguyễn Văn A </Text>
-                <Text>Phim mới</Text>
-              </Text>
-              <Text style={[styles.font_14, styles.infoText]}>
-                Xem tất cả 837 lượt bình luận
-              </Text>
-              <Text style={[styles.font_14, styles.infoText]}>6 tháng 1</Text>
-            </View>
-          </View>
+                    {/* <View style={styles.post}>
+                        <View style={styles.post_head}>
+                            <View style={styles.post_head_left}>
+                                <Image source={avatar} style={styles.avatar} />
+                                <Text style={[styles.font_14, styles.bold]}>
+                                    Nguyễn Văn A
+                                </Text>
+                            </View>
+                            <Image source={more} style={styles.more} />
+                        </View>
+                        <Image source={pokemon1} style={styles.post_img} />
+                        <View style={styles.interact}>
+                            <View style={styles.interact_left}>
+                                <Image
+                                    source={heart}
+                                    style={styles.interact_icon}
+                                />
+                                <TouchableOpacity onPress={toggleModal}>
+                                    <Image
+                                        source={chat}
+                                        style={styles.interact_icon}
+                                    />
+                                    <CommentModal
+                                        isModalVisible={isModalVisible}
+                                        pressed={toggleModal}
+                                    />
+                                </TouchableOpacity>
+                                <Image
+                                    source={send}
+                                    style={styles.interact_icon}
+                                />
+                            </View>
+                            <Image source={save} style={styles.interact_icon} />
+                        </View>
+                        <View style={styles.info}>
+                            <Text style={[styles.font_14, styles.bold]}>
+                                263.526 lượt thích
+                            </Text>
+                            <Text
+                                style={[
+                                    styles.font_14,
+                                    styles.infoText,
+                                    { marginRight: 10 },
+                                ]}
+                            >
+                                <Text style={styles.bold}>Nguyễn Văn A </Text>
+                                <Text>Phim mới</Text>
+                            </Text>
+                            <Text style={[styles.font_14, styles.infoText]}>
+                                Xem tất cả 837 lượt bình luận
+                            </Text>
+                            <Text style={[styles.font_14, styles.infoText]}>
+                                6 tháng 1
+                            </Text>
+                        </View>
+                    </View> */}
                 </View>
             </ScrollView>
         </SafeAreaView>
@@ -345,7 +375,7 @@ const styles = StyleSheet.create({
     info: {
         marginTop: 10,
         marginLeft: 10,
-        marginBottom: 10,
+        marginBottom: 20,
     },
     infoText: {
         marginTop: 5,
