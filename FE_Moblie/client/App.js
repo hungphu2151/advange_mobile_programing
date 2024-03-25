@@ -24,7 +24,7 @@ export default function App() {
         <Store>
             <NavigationContainer>
                 <Stack.Navigator screenOptions={{ headerShown: false }}>
-                    {/* <Stack.Screen name="Login" component={Login} />
+                    <Stack.Screen name="Login" component={Login} />
                     <Stack.Screen name="Signup" component={Signup} />
                     <Stack.Screen
                         name="Forgot_password"
@@ -33,7 +33,7 @@ export default function App() {
                     <Stack.Screen
                         name="Reset_password"
                         component={Reset_password}
-                    /> */}
+                    />
                     <Stack.Screen name="Main" component={Main} />
                     <Stack.Screen name="AdminScreen" component={AdminScreen} />
                     <Stack.Screen
