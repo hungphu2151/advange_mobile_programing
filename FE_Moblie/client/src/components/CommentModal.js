@@ -34,7 +34,7 @@ const CommentModal = () => {
                 <View style={styles.title}>
                     <TouchableOpacity
                         
-                        onPress={m     [podalContext.handleToggle}
+                        onPress={modalContext.handleToggle}
                         style={{ flex: 1 }}
                     >
                         {/* <TouchableOpacity onPress={pressed} style={{ flex: 1 }}> */}
@@ -54,7 +54,7 @@ const CommentModal = () => {
                 <View style={styles.hr} />
                 <ScrollView>
                     {/* {
-                    console.log(isModalVisible)p
+                    console.log(isModalVisible)
                     } */}
                     {modalContext.comments.length > 0 ? (
                         modalContext.comments.map((cmt) => {
