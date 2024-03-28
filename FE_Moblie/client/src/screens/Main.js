@@ -1,4 +1,5 @@
-import { View, Text, StyleSheet } from "react-native";
+import { useContext } from "react";
+import { View, Text, StyleSheet, Image } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -10,10 +11,12 @@ import { Friend_request } from "./Friend_request";
 import { Profile } from "./Profile";
 import { UserProfile } from "./UserProfile";
 import MyIcon from "../components/my-icon";
+import { DataContext } from "../store/Store";
 
 const Tab = createBottomTabNavigator();
 
 export function Main() {
+    const { user } = useContext(DataContext);
     return (
         <Tab.Navigator
             screenOptions={({ route }) => ({
@@ -138,7 +141,29 @@ export function Main() {
                     },
                 }}
             />
-            <Tab.Screen name="UserProfile" component={UserProfile} />
+            <Tab.Screen
+                name="UserProfile"
+                component={UserProfile}
+                options={{
+                    tabBarIcon: ({ focused, color, size }) => {
+                        return focused ? (
+                            <Image
+                                source={{
+                                    uri: user.avatar,
+                                }}
+                                style={styles.avatar_focus}
+                            />
+                        ) : (
+                            <Image
+                                source={{
+                                    uri: user.avatar,
+                                }}
+                                style={styles.avatar}
+                            />
+                        );
+                    },
+                }}
+            />
         </Tab.Navigator>
     );
 }
@@ -149,5 +174,19 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#fff",
+    },
+    avatar: {
+        // marginRight: 10,
+        height: 28,
+        width: 28,
+        borderRadius: 14,
+    },
+    avatar_focus: {
+        // marginRight: 10,
+        height: 28,
+        width: 28,
+        borderRadius: 14,
+        borderWidth : 1,
+        borderColor: '#000',
     },
 });

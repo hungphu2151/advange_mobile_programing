@@ -1,4 +1,5 @@
-import { useState, useEffect  } from "react";
+import { useState, useEffect, useContext } from "react";
+import axios from "axios";
 import {
     Text,
     View,
@@ -7,92 +8,74 @@ import {
     TouchableOpacity,
     Button,
     ScrollView,
-    BackHandler ,
+    BackHandler,
 } from "react-native";
 import Modal from "react-native-modal";
+import { getData } from "../utils/asyncstorage";
 import avatar from "../public/avatar.jpg";
 import heart from "../public/heart.png";
 import back from "../public/back.png";
+import { ModalContext } from "./modal-context";
 
-const CommentModal = ({ isModalVisible, pressed }) => {
+const test = [{ comment: "123" }, { comment: "456" }];
+
+// const CommentModal = ({ id, isModalVisible, pressed, cmts }) => {
+const CommentModal = () => {
+    const modalContext = useContext(ModalContext);
+    console.log(modalContext.comments);
     return (
         <Modal
-            isVisible={isModalVisible}
+            isVisible={modalContext.isVisible}
             style={{ margin: 0 }}
-            onBackButtonPress={pressed}
+            onBackButtonPress={modalContext.handleToggle}
         >
             <View style={styles.modal}>
                 <View style={styles.head} />
                 <View style={styles.title}>
                     <TouchableOpacity
-                        onPress={pressed}
-                        style={{flex:1}}
+                        
+                        onPress={m     [podalContext.handleToggle}
+                        style={{ flex: 1 }}
                     >
-                        <Image
-                            source={back}
-                            style={[styles.iconStyle,]}
-                        />
+                        {/* <TouchableOpacity onPress={pressed} style={{ flex: 1 }}> */}
+                        <Image source={back} style={[styles.iconStyle]} />
                     </TouchableOpacity>
-                    <Text style={{ fontWeight: "bold", textAlign: 'center', flex:8 }}>Bình luận</Text>
-                    <View style={{flex:1}}></View>
+                    <Text
+                        style={{
+                            fontWeight: "bold",
+                            textAlign: "center",
+                            flex: 8,
+                        }}
+                    >
+                        Bình luận
+                    </Text>
+                    <View style={{ flex: 1 }}></View>
                 </View>
                 <View style={styles.hr} />
                 <ScrollView>
-                    <View style={styles.comment}>
-                        <View style={styles.leftContent}>
-                            <Image source={avatar} style={styles.avatar} />
-                            <View style={styles.verticalContainer}>
-                                <Text
-                                    style={{
-                                        fontWeight: "bold",
-                                        fontSize: 14,
-                                        marginBottom: 3,
-                                    }}
-                                >
-                                    Nguyễn Văn A
-                                </Text>
-                                <Text
-                                    style={{
-                                        fontSize: 14,
-                                        marginBottom: 3,
-                                        width: "100%",
-                                    }}
-                                >
-                                    Nội dung bình luận Nội dung bình luận Nội
-                                    dung bình luận Nội dung bình luận Nội dung
-                                    bình luận Nội dung bình luận Nội dung bình
-                                    luận Nội dung bình luận Nội dung bình luận
-                                </Text>
-                                <Text
-                                    style={{
-                                        fontSize: 13,
-                                        marginBottom: 5,
-                                        color: "#737373",
-                                    }}
-                                >
-                                    Trả lời
-                                </Text>
-                                <Text
-                                    style={{ fontSize: 13, color: "#737373" }}
-                                >
-                                    - Xem 2 câu trả lời khác
-                                </Text>
-                            </View>
-                        </View>
-                        <TouchableOpacity
-                            onPress={() => {
-                                console.log("like");
-                            }}
-                        >
-                            <Image
-                                source={heart}
-                                style={[
-                                    styles.iconStyle,
-                                    { alignSelf: "center" },
-                                ]}
-                            />
-                        </TouchableOpacity>
-                    </View>
+                    {/* {
+                    console.log(isModalVisible)p
+                    } */}
+                    {modalContext.comments.length > 0 ? (
+                        modalContext.comments.map((cmt) => {
+                            console.log(cmt.comment_content);
+                            return (
+                                <View key={cmt._id} style={styles.comment}>
+                                    <Text
+                                        style={{
+                                            fontWeight: "bold",
+                                            fontSize: 14,
+                                            marginBottom: 3,
+                                        }}
+                                    >
+                                        {cmt.comment_content}
+                                    </Text>
+                                </View>
+                            );
+                        })
+                    ) : (
+                        <Text>No comments</Text>
+                    )}
                 </ScrollView>
             </View>
         </Modal>

@@ -1,5 +1,4 @@
-import { useContext, useRef } from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
@@ -30,6 +29,7 @@ import { getData } from "../utils/asyncstorage";
 import PostInteract from "../components/home/PostInteract";
 import { DataContext } from "../store/Store";
 import CommentModal from "../components/CommentModal";
+import ModalContextProvider from "../components/modal-context";
 
 const { width } = Dimensions.get("window");
 const flatListHeight = width * 1.3375;
@@ -40,6 +40,7 @@ export function Home() {
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(0);
     const { user } = useContext(DataContext);
+    // console.log(user);
 
     const [isModalVisible, setModalVisible] = useState(false);
 
@@ -58,7 +59,7 @@ export function Home() {
             setLoading(true);
             const response = await axios.get(
                 process.env.EXPO_PUBLIC_LOCAL_API_URL +
-                    `/posts/?size=5&page=${page}`,
+                    `/posts/?size=2&page=${page}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -136,7 +137,7 @@ export function Home() {
                 onScroll={(event) => handleScroll(event)}
             >
                 <View style={styles.body}>
-                    {posts.map((post,index) => {
+                    {posts.map((post, index) => {
                         return (
                             <View key={index} style={styles.item}>
                                 <View style={styles.post}>
@@ -165,13 +166,20 @@ export function Home() {
                                         />
                                     </View>
                                     <View>
-                                        <View style={{ height: flatListHeight, marginTop:10 }}>
+                                        <View
+                                            style={{
+                                                height: flatListHeight,
+                                                marginTop: 10,
+                                            }}
+                                        >
                                             <FlatList
                                                 data={post.post_img}
                                                 horizontal={true}
                                                 pagingEnabled={true}
                                                 renderItem={renderMedia}
-                                                keyExtractor={(item) => item.id}
+                                                keyExtractor={(item) =>
+                                                    item.url
+                                                }
                                                 onScroll={onScroll}
                                                 showsHorizontalScrollIndicator={
                                                     false
@@ -180,22 +188,30 @@ export function Home() {
                                         </View>
                                         {post.post_img.length > 1 && (
                                             <View style={styles.pagination}>
-                                                {post.post_img.map((item, index) => (
-                                                    <View
-                                                        key={index}
-                                                        style={[
-                                                            styles.paginationDot,
-                                                            index ===
-                                                            currentPage
-                                                                ? styles.paginationDotActive
-                                                                : null,
-                                                        ]}
-                                                    />
-                                                ))}
+                                                {post.post_img.map(
+                                                    (item, index) => (
+                                                        <View
+                                                            key={index}
+                                                            style={[
+                                                                styles.paginationDot,
+                                                                index ===
+                                                                currentPage
+                                                                    ? styles.paginationDotActive
+                                                                    : null,
+                                                            ]}
+                                                        />
+                                                    )
+                                                )}
                                             </View>
                                         )}
                                     </View>
-                                    <PostInteract comment={toggleModal} isModalVisible={isModalVisible}/>
+                                    <ModalContextProvider>
+                                        <PostInteract
+                                            id={post._id}
+                                            comment={toggleModal}
+                                            isModalVisible={isModalVisible}
+                                        />
+                                    </ModalContextProvider>
                                     <View style={styles.info}>
                                         <Text
                                             style={[

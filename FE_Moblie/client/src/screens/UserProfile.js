@@ -244,6 +244,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#fff",
         width: "100%",
+        // backgroundColor:'gray'
     },
     header: {
         flexDirection: "row",
@@ -251,7 +252,8 @@ const styles = StyleSheet.create({
         paddingTop: 20,
         paddingLeft: 20,
         paddingBottom: 20,
-        marginTop: 50,
+        // marginTop: 50,
+        // backgroundColor:'gray'
     },
     avatarContainer: {
         marginTop:20,

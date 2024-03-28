@@ -10,8 +10,8 @@ import { storeData } from "../utils/asyncstorage.js";
 import { DataContext } from "../store/Store";
 
 export function Login({ navigation }) {
-    const [phone_num, onChangePhone_num] = useState("");
-    const [pw, onChangePw] = useState("");
+    const [phone_num, onChangePhone_num] = useState("0000000001");
+    const [pw, onChangePw] = useState("123456");
     const { setUser } = useContext(DataContext);
 
     async function handleLogin() {
@@ -20,13 +20,13 @@ export function Login({ navigation }) {
                 phone_number: phone_num,
                 pass_word: pw,
             });
-            console.log(res.data);
+            // console.log(res.data);
             if (res.data.success) {
                 // storeData('token',res.data.token)
                 // storeData('user',res.data.user)
-                console.log("accessoken", res.data);
+                // console.log("data", res.data);
                 await storeData("token", res.data.token);
-                // setUser({ ...res.user, isLoggedIn: true });
+                setUser({ ...res.data.user, isLoggedIn: true });
 
                 if (res.data.user.role_id == 1) {
                     navigation.navigate("Main");
